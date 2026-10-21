@@ -77,6 +77,18 @@ function BlogPage() {
 }
 
 export default function App() {
+  const redirect = new URLSearchParams(
+    window.location.search
+  ).get('redirect')
+
+  if (redirect) {
+    window.history.replaceState(
+      null,
+      '',
+      '/nexor-website' + redirect
+    )
+  }
+
   return (
     <BrowserRouter basename="/nexor-website">
       <Routes>
