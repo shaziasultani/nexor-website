@@ -1,22 +1,25 @@
 
 import { useState } from 'react'
 
+const BASE = '/nexor-website'
+
 const links = [
-  { name: 'About', href: '/#about' },
-  { name: 'Services', href: '/#services' },
-  { name: 'Contact', href: '/#contact' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'About', href: `${BASE}/#about` },
+  { name: 'Services', href: `${BASE}/#services` },
+  { name: 'Contact', href: `${BASE}/#contact` },
+  { name: 'Blog', href: `${BASE}/blog` },
 ]
+
 const pages = [
-  { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/#about' },
-  { name: 'Services', href: '/#services' },
-  { name: 'Services Details', href: '/#services-details' },
-  { name: 'Contact', href: '/#contact' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Blog Details', href: '/blog-details' },
-  { name: 'Privacy Policy', href: '/privacy-policy' },
-  { name: 'Terms & Conditions', href: '/terms-conditions' },
+  { name: 'Home', href: `${BASE}/` },
+  { name: 'About Us', href: `${BASE}/#about` },
+  { name: 'Services', href: `${BASE}/#services` },
+  { name: 'Services Details', href: `${BASE}/#services-details` },
+  { name: 'Contact', href: `${BASE}/#contact` },
+  { name: 'Blog', href: `${BASE}/blog` },
+  { name: 'Blog Details', href: `${BASE}/blog-details` },
+  { name: 'Privacy Policy', href: `${BASE}/privacy-policy` },
+  { name: 'Terms & Conditions', href: `${BASE}/terms-conditions` },
 ]
 
 export default function Navbar() {
@@ -29,7 +32,7 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-8xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
 
         {/* Logo */}
-        <a href="/">
+        <a href={`${BASE}/`}>
           <img
             src="https://framerusercontent.com/images/f6VTynItzl233pgArrziNVDfbUw.svg?width=107&height=34"
             alt="Nexor"
@@ -39,7 +42,7 @@ export default function Navbar() {
         {/* Desktop links */}
         <div className="hidden items-center gap-8 rounded-xl bg-white px-6 py-3 md:flex">
           <a
-           href="/#about"
+            href={`${BASE}/#about`}
             className="text-lg font-semibold text-[#555650] transition-colors duration-200 hover:text-black"
           >
             About
@@ -116,7 +119,7 @@ export default function Navbar() {
 
         {/* Desktop Contact Us button */}
         <a
-          href="#contact"
+          href={`${BASE}/#contact`}
           className="hidden md:inline-flex items-center justify-center rounded-lg border border-[#20231f] bg-black px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-black/75 hover:text-white focus:outline-none"
         >
           Contact Us
@@ -139,7 +142,7 @@ export default function Navbar() {
         <div className="border-t border-black/10 bg-white px-6 pb-6 pt-4 md:hidden">
           <div className="flex flex-col items-start gap-5">
             <a
-              href="#about"
+              href={`${BASE}/#about`}
               onClick={() => setMenuOpen(false)}
               className="text-sm font-medium text-[#20231f]"
             >
@@ -200,7 +203,7 @@ export default function Navbar() {
 
             {/* Mobile Contact Us button */}
             <a
-              href="#contact"
+              href={`${BASE}/#contact`}
               onClick={() => {
                 setMenuOpen(false)
                 setMobilePagesOpen(false)
