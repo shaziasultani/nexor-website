@@ -78,7 +78,7 @@ function BlogPage() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/nexor-website">
       <Routes>
         <Route
           path="/"
