@@ -1,5 +1,6 @@
 
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const BASE = '/nexor-website'
 
@@ -78,7 +79,7 @@ export default function Navbar() {
               </span>
             </button>
 
-            {/* Animated dropdown */}
+            {/* Animated desktop dropdown */}
             <div
               className={`invisible absolute left-1/2 top-full z-50 w-[560px] -translate-x-1/2 pt-4 transition-[opacity,transform,visibility] duration-300 ease-in-out ${
                 pagesOpen
@@ -137,84 +138,126 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="border-t border-black/10 bg-white px-6 pb-6 pt-4 md:hidden">
-          <div className="flex flex-col items-start gap-5">
-            <a
-              href={`${BASE}/#about`}
-              onClick={() => setMenuOpen(false)}
-              className="text-sm font-medium text-[#20231f]"
-            >
-              About
-            </a>
+      {/* Animated mobile menu */}
+      <AnimatePresence initial={false}>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, height: 0, y: -12 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -12 }}
+            transition={{
+              duration: 0.45,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="overflow-hidden border-t border-black/10 bg-white md:hidden"
+          >
+            <div className="px-6 pb-6 pt-4">
+              <div className="flex flex-col items-start gap-5">
 
-            {/* Mobile Pages dropdown */}
-            <div className="w-full">
-              <button
-                type="button"
-                onClick={() => setMobilePagesOpen(!mobilePagesOpen)}
-                aria-expanded={mobilePagesOpen}
-                className="flex items-center gap-2 text-sm font-medium text-[#20231f]"
-              >
-                Pages
-
-                <span
-                  className={`inline-block font-bold transition-transform duration-300 ${
-                    mobilePagesOpen ? 'rotate-180' : 'rotate-0'
-                  }`}
-                >
-                  ⌄
-                </span>
-              </button>
-
-              {mobilePagesOpen && (
-                <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 rounded-lg bg-white p-4">
-                  {pages.map((page, index) => (
-                    <a
-                      key={`${page.name}-${index}`}
-                      href={page.href}
-                      onClick={() => {
-                        setMenuOpen(false)
-                        setMobilePagesOpen(false)
-                      }}
-                      className="text-sm font-medium text-[#555650] transition-colors duration-200 hover:text-black"
-                    >
-                      {page.name}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Other mobile links */}
-            {links
-              .filter((link) => link.name !== 'About')
-              .map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
+                {/* About */}
+                <motion.a
+                  href={`${BASE}/#about`}
                   onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.05 }}
                   className="text-sm font-medium text-[#20231f]"
                 >
-                  {link.name}
-                </a>
-              ))}
+                  About
+                </motion.a>
 
-            {/* Mobile Contact Us button */}
-            <a
-              href={`${BASE}/#contact`}
-              onClick={() => {
-                setMenuOpen(false)
-                setMobilePagesOpen(false)
-              }}
-              className="inline-flex self-start items-center justify-center rounded-lg border border-[#20231f] bg-black px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-black/75 hover:text-white focus:outline-none"
-            >
-              Contact Us
-            </a>
-          </div>
-        </div>
-      )}
+                {/* Mobile Pages dropdown */}
+                <div className="w-full">
+                  <button
+                    type="button"
+                    onClick={() => setMobilePagesOpen(!mobilePagesOpen)}
+                    aria-expanded={mobilePagesOpen}
+                    className="flex items-center gap-2 text-sm font-medium text-[#20231f]"
+                  >
+                    Pages
+
+                    <span
+                      className={`inline-block font-bold transition-transform duration-300 ${
+                        mobilePagesOpen ? 'rotate-180' : 'rotate-0'
+                      }`}
+                    >
+                      ⌄
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {mobilePagesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0, y: -6 }}
+                        animate={{ opacity: 1, height: 'auto', y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -6 }}
+                        transition={{
+                          duration: 0.3,
+                          ease: 'easeInOut',
+                        }}
+                        className="mt-4 overflow-hidden"
+                      >
+                        <div className="grid grid-cols-2 gap-x-6 gap-y-4 rounded-lg bg-white p-4">
+                          {pages.map((page, index) => (
+                            <a
+                              key={`${page.name}-${index}`}
+                              href={page.href}
+                              onClick={() => {
+                                setMenuOpen(false)
+                                setMobilePagesOpen(false)
+                              }}
+                              className="text-sm font-medium text-[#555650] transition-colors duration-200 hover:text-black"
+                            >
+                              {page.name}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Other mobile links */}
+                {links
+                  .filter((link) => link.name !== 'About')
+                  .map((link, index) => (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.3,
+                        delay: 0.1 * (index + 1),
+                      }}
+                      className="text-sm font-medium text-[#20231f]"
+                    >
+                      {link.name}
+                    </motion.a>
+                  ))}
+
+                {/* Mobile Contact Us button */}
+                <motion.a
+                  href={`${BASE}/#contact`}
+                  onClick={() => {
+                    setMenuOpen(false)
+                    setMobilePagesOpen(false)
+                  }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.35 }}
+                  className="inline-flex self-start items-center justify-center rounded-lg border border-[#20231f] bg-black px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-black/75 hover:text-white focus:outline-none"
+                >
+                  Contact Us
+                </motion.a>
+
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
